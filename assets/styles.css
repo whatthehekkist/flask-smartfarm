@@ -1,0 +1,39 @@
+.container {
+    max-width: 50%;
+    margin: 0 auto;
+    padding: 50px; /* 여백 추가 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.input {
+    margin: 10px 0;
+    width: 100%;
+    height: 30px;
+}
+
+.button {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 10px;
+    border-radius: 4px; /* 모서리 둥글게 */
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #45a049; /* 호버 시 색상 변경 */
+}
+
+.output {
+    margin-top: 20px;
+    text-align: center;
+}
