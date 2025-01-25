@@ -82,10 +82,10 @@ def update_model_evaluation(n_clicks):
                     labels=dict(x="Predicted", y="Actual", color="Count"),
                     x=['Low', 'High'],
                     y=['Low', 'High'],
-                    color_continuous_scale='Blues',
-                    title='혼동 행렬')
+                    color_continuous_scale=px.colors.sequential.Magenta,
+                    title='Confusion Matrix')
 
-    return f"모델 정확도: {accuracy:.2f}", fig
+    return f"Accuracy: {accuracy:.2f}", fig
 
 
 # 사용자 입력 기반 예측
