@@ -1,3 +1,5 @@
+# pagination test
+
 from flask import Flask, render_template, redirect, url_for, request
 import dash
 from layout import create_layout
@@ -18,7 +20,21 @@ app.layout = create_layout(df)
 # route /
 @server.route('/')
 def index():
-    return render_template('index.html')
+    # pagination
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    total = len(df)
+    start = 1 if page < 1 else (page - 1) * per_page
+    end = start + per_page
+    data = df.iloc[start:end]
+
+    return render_template(
+        'index.html',
+        data=data.to_html(classes='data', header='true', index=False),
+        page=page,
+        total=total,
+        per_page=per_page
+    )
 
 
 # route /dash

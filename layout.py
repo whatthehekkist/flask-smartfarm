@@ -1,5 +1,6 @@
 import config
 from dash import dcc, html
+from dash.dash_table import DataTable
 import plotly.express as px
 
 
@@ -56,12 +57,47 @@ def create_dropdown(_id, label, options, value):
     ])
 
 
+def data_table(df):
+    return DataTable(
+        id='weather-table',
+        columns=[
+            {"name": "", "id": "row_number"},
+            *[{"name": i, "id": i} for i in df.columns]
+        ],
+        data=[
+            {**row, "row_number": index + 1}
+            for index, row in df.iterrows()
+        ],
+        page_size=10,
+        style_table={'overflowX': 'auto', 'margin': '20px'},
+        style_header={
+            'backgroundColor': 'lightgrey',
+            'fontWeight': 'bold',
+            'textAlign': 'center',
+            'padding': '10px'
+        },
+        style_cell={
+            'padding': '10px',
+            'textAlign': 'left',
+        },
+        sort_action='native',
+        # filter_action='native',
+        # row_selectable='multi',
+        # selected_rows=[],
+    )
+
+
 def create_layout(df):
     # 레이아웃 정의
     return html.Div([
 
         html.Div([
             html.H1("스마트 농업 토양 습도 예측 대시보드"),
+
+            html.Div([
+                html.H1("Weather Data"),
+                data_table(df),
+            ], style={'paddingRight': '5%'}),
 
             html.Div([
                 html.H2("Temperature & Humidity Histogram"),
@@ -89,7 +125,9 @@ def create_layout(df):
                                 [{'label': soil, 'value': soil} for soil in config.SOIL_TYPES], 'Sandy'),
                 html.Button('예측하기', id='predict-button', className='button', style={
                     'background': 'radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(70,252,216,1) 100%)'}),
+
+                html.Div(html.H3(id='prediction-output', className='output', style={'padding-bottom': '5%'}))
             ], style={'width': '80%', 'margin': '0 auto'}),
-            html.Div(html.H3(id='prediction-output', className='output', style={'padding-bottom': '5%'}))
+
         ]),
     ])
