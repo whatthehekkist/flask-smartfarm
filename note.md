@@ -1,7 +1,7 @@
 # installation (venv)
 pip install Flask 
 pip install pandas numpy scikit-learn dash plotly
-
+py -m pip install markdown
 
 # Dash
 https://positive-impactor.tistory.com/1081
@@ -65,6 +65,9 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 ============================================================
 문제 4: 모델 평가 및 성능 분석
 1. 혼동 행렬(Confusion Matrix)을 생성하고 시각화하세요.
+![Image](https://github.com/user-attachments/assets/2ae261cf-a753-433b-886e-44fc497578b7)
+
+
 2. 정밀도(Precision), 재현율(Recall), F1-score를 계산하세요.
 3. 실제와 예측된 값을 비교하는 산점도를 생성하세요.
 힌트: confusion_matrix(), classification_report(), plotly.express.imshow()

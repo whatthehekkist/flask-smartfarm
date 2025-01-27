@@ -3,11 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        pre {
+            background-color: #343a40; /* 배경색 */
+            padding: 10px;             /* 패딩 추가 */
+            border-radius: 5px;        /* 모서리 둥글게 */
+            overflow: auto;            /* 스크롤 추가 */
+            white-space: pre-wrap;     /* 줄 바꿈 처리 */
+            font-family: 'Courier New', Courier, monospace; /* 고정폭 글꼴 */
+            color: #d7d7d7;               /* 글자색 */
+        }
+        .code-line {
+            display: block;            /* 각 코드 라인을 블록으로 표시 */
+        }
+    </style>
+
     <title>Smart Farm | home</title>
+
 </head>
 <body>
-    <h1>홈 페이지</h1>
-    <iframe src="{{ url_for('dash') }}"></iframe>
-    <p><a href="{{ url_for('dash') }}">Dash 그래프 보기</a></p>
+    <div class="container">
+        <div>
+            <a href="{{ url_for('dash') }}">
+<!--                /*sandbox="allow-same-origin"*/-->
+                <iframe
+                    src="/dash/"
+                    style="opacity: 0.5; border: none; width: 100%; height: 600px;"></iframe>
+            </a>
+        </div>
+
+        <div class="mt-5">
+            {{ content|safe }}
+        </div>
+    </div>
 </body>
 </html>

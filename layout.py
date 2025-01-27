@@ -9,22 +9,24 @@ def create_histogram_graph(_id, df, x_col, title):
     # color_sequence = px.colors.qualitative.Set1
 
     print(df.head())
-
+    fig = px.histogram(
+        df,
+        x=x_col,
+        nbins=30,
+        title=title,
+        color_discrete_sequence=px.colors.sequential.Emrld if x_col == 'Temperature' else px.colors.sequential.Viridis,
+        opacity=0.7,
+        histnorm='percent',
+    )
+    fig.update_layout(
+        # plot_bgcolor='lightblue',
+        paper_bgcolor='rgb(248, 249, 250)',
+        xaxis_title=x_col,
+        yaxis_title='백분율'
+    )
     return dcc.Graph(
         id=_id,
-        figure=px.histogram(
-            df,
-            x=x_col,
-            nbins=30,
-            title=title,
-            # color=x_col,
-            # color_discrete_sequence=px.colors.sequential.Viridis,
-            # color_discrete_sequence=px.colors.sequential.Jet,
-            # color_discrete_sequence=px.colors.qualitative.Vivid_r if x_col == 'Temperature' else px.colors.qualitative.Plotly,
-            color_discrete_sequence=px.colors.sequential.Emrld if x_col == 'Temperature' else px.colors.sequential.Viridis,
-            opacity=0.7,
-            histnorm='percent',
-        )
+        figure=fig
     )
 
 
@@ -57,7 +59,7 @@ def create_dropdown(_id, label, options, value):
     ])
 
 
-def data_table(df):
+def show_weather_data_table(df):
     return DataTable(
         id='weather-table',
         columns=[
@@ -87,6 +89,29 @@ def data_table(df):
     )
 
 
+def show_classification_report_table():
+    """Classification report 테이블 생성 함수"""
+    return html.Div([
+        html.H4("Classification Report"),
+        DataTable(
+            id='classification-report-table',
+            columns=[
+                {"name": "Metric", "id": "index"},
+                {"name": "Precision", "id": "precision"},
+                {"name": "Recall", "id": "recall"},
+                {"name": "F1-Score", "id": "f1-score"},
+                {"name": "Support", "id": "support"}
+            ],
+            data=[],  # 초기 데이터는 빈 목록
+            style_table={'overflowX': 'auto'},
+            style_cell={'textAlign': 'left'},
+            style_header={'backgroundColor': 'lightgrey'},
+            style_data={'whiteSpace': 'normal', 'height': 'auto'},
+            page_size=10  # 페이지 크기 설정 (선택 사항)
+        )
+    ])
+
+
 def create_layout(df):
     # 레이아웃 정의
     return html.Div([
@@ -95,21 +120,23 @@ def create_layout(df):
             html.H1("스마트 농업 토양 습도 예측 대시보드"),
 
             html.Div([
-                html.H1("Weather Data"),
-                data_table(df),
-            ], style={'paddingRight': '5%'}),
+                html.H2("Weather Data"),
+                show_weather_data_table(df),
+            ], style={'padding': '5% 5% 0 0'}),
 
             html.Div([
                 html.H2("Temperature & Humidity Histogram"),
                 create_histogram_graph('histogram-temp', df, 'Temperature', 'Temperature 분포'),
                 create_histogram_graph('histogram-hum', df, 'Humidity', 'Humidity 분포'),
-            ]),
+            ], style={'backgroundColor': '#f8f9fa', 'paddingTop': '5%'}),
 
             html.Div([
                 html.H2("Model Evaluation"),
-                html.Div(id='model-evaluation'),
+                html.H4(id='model-evaluation'),
                 dcc.Graph(id='confusion-matrix'),
-            ]),
+                dcc.Graph(id='scatter-plot'),
+                show_classification_report_table(),
+            ], style={'paddingTop': '5%', 'marginBottom': '2%'}),
         ], style={'textAlign': 'center'}),
 
         html.Div([
@@ -129,5 +156,6 @@ def create_layout(df):
                 html.Div(html.H3(id='prediction-output', className='output', style={'padding-bottom': '5%'}))
             ], style={'width': '80%', 'margin': '0 auto'}),
 
-        ]),
-    ])
+        ], style={'backgroundColor': '#f8f9fa', 'paddingTop': '5%'}
+        ),
+    ], style={'marginTop': '50px'})
