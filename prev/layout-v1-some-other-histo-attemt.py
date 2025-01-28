@@ -2,32 +2,79 @@ import config
 from dash import dcc, html
 from dash.dash_table import DataTable
 import plotly.express as px
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.io as pio
 
+import base64
+from io import BytesIO
+
+
+# def create_histogram_graph(_id, df, x_col, title):
+#     """히스토그램 그래프 생성 함수"""
+#     # color_sequence = px.colors.qualitative.Set1
+#
+#     print(df.head())
+#     fig = px.histogram(
+#         df,
+#         x=x_col,
+#         nbins=30,
+#         title=title,
+#         color_discrete_sequence=px.colors.sequential.Emrld if x_col == 'Temperature' else px.colors.sequential.Viridis,
+#         opacity=0.7,
+#         histnorm='percent',
+#     )
+#     fig.update_layout(
+#         # plot_bgcolor='lightblue',
+#         paper_bgcolor='rgb(248, 249, 250)',
+#         xaxis_title=x_col,
+#         yaxis_title='백분율'
+#     )
+#     return dcc.Graph(
+#         id=_id,
+#         figure=fig
+#     )
+
+
+# def create_histogram_graph(_id, df, x_col, title):
+#     """히스토그램 그래프 생성 함수"""
+#     plt.figure(figsize=(10, 6))
+#
+#     # seaborn을 사용하여 히스토그램 생성
+#     sns.histplot(data=df, x=x_col, bins=30, stat='percent', kde=False, color='blue', alpha=0.7)
+#
+#     # Matplotlib figure를 Plotly figure로 변환
+#     fig = pio.to_plotly(fig=plt.gcf())
+#
+#     # 레이아웃 업데이트
+#     fig.update_layout(
+#         title=title,
+#         xaxis_title=x_col,
+#         yaxis_title='백분율',
+#         paper_bgcolor='rgb(248, 249, 250)',
+#     )
+#
+#     plt.close()  # Matplotlib의 창을 닫아 메모리 누수 방지
+#     return dcc.Graph(
+#         id=_id,
+#         figure=fig
+#     )
 
 def create_histogram_graph(_id, df, x_col, title):
     """히스토그램 그래프 생성 함수"""
-    # color_sequence = px.colors.qualitative.Set1
+    plt.figure(figsize=(10, 6))
 
-    print(df.head())
-    fig = px.histogram(
-        df,
-        x=x_col,
-        nbins=30,
-        title=title,
-        color_discrete_sequence=px.colors.sequential.Emrld if x_col == 'Temperature' else px.colors.sequential.Viridis,
-        opacity=0.7,
-        histnorm='percent',
-    )
-    fig.update_layout(
-        # plot_bgcolor='lightblue',
-        paper_bgcolor='rgb(248, 249, 250)',
-        xaxis_title=x_col,
-        yaxis_title='percentage'
-    )
-    return dcc.Graph(
-        id=_id,
-        figure=fig
-    )
+    # seaborn을 사용하여 히스토그램 생성
+    sns.histplot(data=df, x=x_col, bins=30, stat='percent', kde=False, color='blue', alpha=0.7)
+
+    # 이미지 저장
+    buf = BytesIO()
+    plt.savefig(buf, format='png')
+    plt.close()  # Matplotlib의 창을 닫아 메모리 누수 방지
+    buf.seek(0)
+    encoded_image = base64.b64encode(buf.read()).decode('ascii')
+
+    return html.Img(src='data:image/png;base64,{}'.format(encoded_image), id=_id)
 
 
 def create_slider(_id, label, min_value, max_value, value, marks):
@@ -60,22 +107,15 @@ def create_dropdown(_id, label, options, value):
 
 
 def show_weather_data_table(df):
-    """날씨 데이터 테이블로 보여주는 함수"""
-
-    weather_df = df.copy()
-    # 소수점 2자리로 포맷팅
-    for col in weather_df.select_dtypes(include=['float64', 'float32']):  # float 타입 열에 대해
-        weather_df[col] = weather_df[col].map(lambda x: f"{x:.2f}")  # 소수점 2자리로 변환
-
     return DataTable(
         id='weather-table',
         columns=[
             {"name": "", "id": "row_number"},
-            *[{"name": i, "id": i} for i in weather_df.columns]
+            *[{"name": i, "id": i} for i in df.columns]
         ],
         data=[
             {**row, "row_number": index + 1}
-            for index, row in weather_df.iterrows()
+            for index, row in df.iterrows()
         ],
         page_size=10,
         style_table={'overflowX': 'auto', 'margin': '20px'},
@@ -99,7 +139,7 @@ def show_weather_data_table(df):
 def show_classification_report_table():
     """Classification report 테이블 생성 함수"""
     return html.Div([
-        # html.H4("Classification Report"),
+        html.H4("Classification Report"),
         DataTable(
             id='classification-report-table',
             columns=[
@@ -116,7 +156,7 @@ def show_classification_report_table():
             style_data={'whiteSpace': 'normal', 'height': 'auto'},
             page_size=10  # 페이지 크기 설정 (선택 사항)
         )
-    ], title='classification Report')
+    ])
 
 
 def create_layout(df):
@@ -133,8 +173,8 @@ def create_layout(df):
 
             html.Div([
                 html.H2("Temperature & Humidity Histogram"),
-                create_histogram_graph('histogram-temp', df, 'Temperature', 'Temperature Distribution'),
-                create_histogram_graph('histogram-hum', df, 'Humidity', 'Humidity Distribution'),
+                create_histogram_graph('histogram-temp', df, 'Temperature', 'Temperature 분포'),
+                create_histogram_graph('histogram-hum', df, 'Humidity', 'Humidity 분포'),
             ], style={'backgroundColor': '#f8f9fa', 'paddingTop': '5%'}),
 
             html.Div([

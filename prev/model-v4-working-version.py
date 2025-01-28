@@ -10,7 +10,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 from sklearn.neighbors import NearestNeighbors
 
-from dash import dash, callback, Output, Input
+from dash import dash, callback, Output, Input, html
+# import dash
+# from dash import callback
+# from dash.dependencies import Input, Output
 
 import plotly.express as px
 
@@ -88,6 +91,51 @@ def train_model():
 
     return df
 
+"""prev working version"""
+# @callback(
+#     Output('model-evaluation', 'children'),
+#     Output('confusion-matrix', 'figure'),
+#     Input('predict-button', 'n_clicks')
+# )
+# def show_model_evaluation_and_confusion_matrix(n_clicks):  # def update_model_evaluation(n_clicks):
+#     """모델 평가 결과 업데이트 함수"""
+#     """
+#     - 프로그램로드시 모델학습되고 모델정확도 출력 및 혼돈매트릭스가 화면에 그려진다.
+#     - 프로그램로드이후, 사용자 입력이 (현재로서는) 기존의 로직에 전혀 영향을 주지 않으므로
+#       n_clicks시 기존 Output을 리턴
+#     """
+#
+#     global model, X_train, X_test, y_train, y_test
+#
+#     if n_clicks:
+#         return dash.no_update, dash.no_update
+#
+#     print("model-evaluation is called...")
+#
+#     # 정확도 계산
+#     y_pred = model.predict(X_test)
+#     accuracy = accuracy_score(y_test, y_pred)
+#     conf_matrix = confusion_matrix(y_test, y_pred)
+#
+#     print("model: ", model)
+#     print("accuracy: ", accuracy)
+#     print("conf_matrix: ", conf_matrix)
+#
+#     # classification_report 출력
+#     report = classification_report(y_test, y_pred, output_dict=True)
+#     print("Classification Report:")
+#     print(report)
+#
+#     # 혼동 행렬 시각화
+#     fig = px.imshow(conf_matrix,
+#                     labels=dict(x="Predicted", y="Actual", color="Count"),
+#                     x=['Low', 'High'],
+#                     y=['Low', 'High'],
+#                     color_continuous_scale=px.colors.sequential.Magenta,
+#                     title='Confusion Matrix')
+#
+#     return f"Accuracy: {accuracy:.2f}", fig
+
 
 def format_classification_report(report):
     """classification_report를 포맷팅하여 DataFrame으로 변환"""
@@ -99,6 +147,7 @@ def format_classification_report(report):
     return report_df.reset_index().to_dict('records')
 
 
+"""current working version"""
 @callback(
     Output('model-evaluation', 'children'),
     Output('confusion-matrix', 'figure'),
@@ -107,7 +156,6 @@ def format_classification_report(report):
     Input('predict-button', 'n_clicks')
 )
 def show_model_evaluation_and_confusion_matrix(n_clicks):  # def update_model_evaluation(n_clicks):
-    """current working version"""
     """모델 평가 결과 업데이트 함수"""
     """
     - 프로그램로드시 모델학습되고 모델정확도 출력 및 혼돈매트릭스가 화면에 그려진다.
@@ -136,7 +184,17 @@ def show_model_evaluation_and_confusion_matrix(n_clicks):  # def update_model_ev
     print("Classification Report:")
     print(report)
 
-    # classification_report 포맷팅 함수 호출
+    # # accuracy를 별도로 추가
+    # accuracy_row = pd.DataFrame({
+    #     'index': ['Accuracy'],
+    #     'precision': [f"{accuracy:.2f}"],
+    #     'recall': [''],
+    #     'f1-score': [''],
+    #     'support': ['']
+    # })
+    # report_df = pd.concat([report_df, accuracy_row], ignore_index=True)
+
+    # 포맷팅 함수 호출
     report_data = format_classification_report(report)
 
     # 혼동 행렬 시각화
@@ -165,7 +223,7 @@ def show_model_evaluation_and_confusion_matrix(n_clicks):  # def update_model_ev
                              symbol='Match',
                              size_max=10)
 
-    # 산점도 대각선 추가
+    # 대각선 추가
     max_val = max(scatter_df['Actual'].max(), scatter_df['Predicted'].max())
     fig_scatter.add_shape(type='line',
                           x0=0, y0=0, x1=max_val, y1=max_val,
@@ -223,6 +281,7 @@ def predict_soil_moisture(n_clicks, temp, hum, rain, wind, soil_type):
     closest_soil_moisture = df.iloc[indices[0][0]]['SoilMoisture']
     closest_soil_moisture_degree = df.iloc[indices[0][0]]['SoilMoistureDegree']
 
+
     """토양 습도 상태(높음, 낮음) 및 트양습고 값 처리"""
     """
     SoilMoistureDegree는 30을 기준으로 크면 1 작으면 0으로 설정되어 있다.
@@ -234,7 +293,7 @@ def predict_soil_moisture(n_clicks, temp, hum, rain, wind, soil_type):
     if prediction == closest_soil_moisture_degree:
         result_text = f"토양습도: {closest_soil_moisture:.2f} ({'높음' if prediction == 1 else '낮음'})"
         # result_text = f"토양습도: {closest_soil_moisture:.2f} " + "\n" \
-        # f"토양습도정도: {'높음' if prediction == 1 else '낮음'}, " + "\n" \
-        # f"최근접 {max_neighbors}개 이웃의 토양습도정도: {'높음' if closest_soil_moisture_degree == 1 else '낮음'}"
+                      # f"토양습도정도: {'높음' if prediction == 1 else '낮음'}, " + "\n" \
+                      # f"최근접 {max_neighbors}개 이웃의 토양습도정도: {'높음' if closest_soil_moisture_degree == 1 else '낮음'}"
         return result_text
     return "예측된 토양습도값이 없습니다. 입력값들을 다시 설정해 보세요!"

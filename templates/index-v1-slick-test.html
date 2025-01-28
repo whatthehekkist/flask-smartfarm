@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -22,6 +25,17 @@
         }
         .code-line {
             display: block;
+        }
+        .slider {
+            width: 80%; /* 슬라이더의 너비 설정 */
+            max-width: 800px; /* 최대 너비 설정 */
+        }
+
+        .slider div {
+            display: flex; /* Flexbox 사용 */
+            justify-content: center; /* 수평 중앙 정렬 */
+            align-items: center; /* 수직 중앙 정렬 */
+            height: 400px; /* 슬라이드 높이 설정 */
         }
     </style>
 
@@ -46,5 +60,21 @@
             {{ content|safe }}
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.slider').slick({
+                autoplay: true, // 자동 재생
+                autoplaySpeed: 2000, // 2초마다 슬라이드 전환
+                dots: true, // 하단 점 표시
+                infinite: true, // 무한 루프
+                speed: 500, // 슬라이드 전환 속도
+                slidesToShow: 1, // 한 번에 보여줄 슬라이드 수
+                slidesToScroll: 1 // 한 번에 스크롤할 슬라이드 수
+            });
+        });
+    </script>
 </body>
 </html>
