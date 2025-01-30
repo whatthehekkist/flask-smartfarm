@@ -3,48 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        pre {
-            background-color: #343a40;
-            padding: 10px;
-            border-radius: 5px;
-            overflow: auto;
-            white-space: pre-wrap;
-            font-family: 'Courier New', Courier, monospace;
-            color: #d7d7d7;
-        }
-        .code-line {
-            display: block;
-        }
-    </style>
-
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>Smart Farm | home</title>
 
 </head>
 <body>
     <div class="container">
-        <!--
-        <div style="position: relative; width: 100%; height: 600px;">
-        <iframe
-            id="myIframe"
-            src="/dash/"
-            style="opacity: 0.5; border: none; width: 100%; height: 100%;"
-            sandbox="allow-same-origin allow-scripts"></iframe>
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0); pointer-events: auto;">
-            <a href="/dash/" target="_self" style="display: block; height: 100%; width: 100%;"></a>
-        </div>
-        -->
-
-        <div class="mt-5">
+        <div>
             {{ content|safe }}
         </div>
     </div>
+    <div class="fixed-sidebar">
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i></a></li>
+            <li><a href="{{ url_for('/dash/') }}"><i class="fas fa-tachometer-alt"></i></a></li>
+            <li><a href="#top" class="scroll-link"><i class="fas fa-arrow-up"></i></a></li>
+            <li><a href="#bottom" class="scroll-link"><i class="fas fa-arrow-down"></i></a></li>
+        </ul>
+    </div>
+
+    <script>
+        document.querySelectorAll('.scroll-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const direction = this.getAttribute('href') === '#top' ? 0 : document.body.scrollHeight;
+
+                window.scrollTo({
+                    top: direction,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>

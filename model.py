@@ -86,6 +86,8 @@ def train_model():
     accuracy = accuracy_score(y_test, model.predict(X_test))
     print("모델 정확도:", accuracy)
 
+    print(df.head())
+
     return df
 
 
@@ -127,14 +129,10 @@ def show_model_evaluation_and_confusion_matrix(n_clicks):  # def update_model_ev
     accuracy = accuracy_score(y_test, y_pred)
     conf_matrix = confusion_matrix(y_test, y_pred)
 
-    print("model: ", model)
-    print("accuracy: ", accuracy)
-    print("conf_matrix: ", conf_matrix)
-
-    # classification_report 출력
+    # classification_report
     report = classification_report(y_test, y_pred, output_dict=True)
-    print("Classification Report:")
-    print(report)
+    # print("Classification Report:")
+    # print(report)
 
     # classification_report 포맷팅 함수 호출
     report_data = format_classification_report(report)
@@ -149,9 +147,6 @@ def show_model_evaluation_and_confusion_matrix(n_clicks):  # def update_model_ev
 
     # 실제와 예측된 값을 비교하는 산점도 생성
     scatter_df = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
-    # fig_scatter = px.scatter(scatter_df, x='Actual', y='Predicted',
-    #                          labels={'Actual': '실제 값', 'Predicted': '예측 값'},
-    #                          title='실제 vs 예측 값 산점도')
 
     # 일치 여부 컬럼 추가
     scatter_df['Match'] = scatter_df['Actual'] == scatter_df['Predicted']
@@ -233,8 +228,5 @@ def predict_soil_moisture(n_clicks, temp, hum, rain, wind, soil_type):
     result_text = ''
     if prediction == closest_soil_moisture_degree:
         result_text = f"토양습도: {closest_soil_moisture:.2f} ({'높음' if prediction == 1 else '낮음'})"
-        # result_text = f"토양습도: {closest_soil_moisture:.2f} " + "\n" \
-        # f"토양습도정도: {'높음' if prediction == 1 else '낮음'}, " + "\n" \
-        # f"최근접 {max_neighbors}개 이웃의 토양습도정도: {'높음' if closest_soil_moisture_degree == 1 else '낮음'}"
         return result_text
     return "예측된 토양습도값이 없습니다. 입력값들을 다시 설정해 보세요!"

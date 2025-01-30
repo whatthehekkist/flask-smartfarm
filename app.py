@@ -13,7 +13,7 @@ df = train_model()
 
 # Dash app
 dash_app = dash.Dash(__name__, server=app, url_base_pathname='/dash/')
-dash_app.title = 'Smart Farm'
+dash_app.title = 'Smart Farm | Dashboard'
 dash_app.layout = create_layout(df)
 
 
@@ -33,6 +33,6 @@ def dash():
 # run server
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-    # server.run(host='0.0.0.0', port=5000)
-    # server.run(debug=True)
+    # app.run(debug=True) # dev
+
 

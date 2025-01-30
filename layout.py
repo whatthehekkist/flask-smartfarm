@@ -8,7 +8,6 @@ def create_histogram_graph(_id, df, x_col, title):
     """히스토그램 그래프 생성 함수"""
     # color_sequence = px.colors.qualitative.Set1
 
-    print(df.head())
     fig = px.histogram(
         df,
         x=x_col,
@@ -123,13 +122,29 @@ def create_layout(df):
     # 레이아웃 정의
     return html.Div([
 
+        # [side bar test..]
+        # html.Div(className='fixed-sidebar', children=[
+        #     html.Ul([
+        #         html.Li(html.A(html.I(className='fas fa-home'), href='/')),
+        #         html.Li(html.A(html.I(className='fas fa-tachometer-alt'), href='/dash/')),
+        #         html.Li(html.A(html.I(className='fas fa-arrow-up'), href='#', className='scroll-link')),
+        #         html.Li(html.A(html.I(className='fas fa-arrow-down'), href='#', className='scroll-link')),
+        #
+        #         html.Li(html.A("HOME", href="/")),
+        #         html.Li(html.A("DASHBOARD", href="/dash")),  # url_for 대신 직접 경로를 사용
+        #         html.Li(html.A("↑", href="#top", className='scroll-link')),
+        #         html.Li(html.A("↓", href="#bottom", className='scroll-link')),
+        #     ])
+        # ]),
+
         html.Div([
-            html.H1("스마트 농업 토양 습도 예측 대시보드"),
+            # html.H1("스마트 농업 토양 습도 예측 대시보드"),
+            # html.H1("Dashboard"),
 
             html.Div([
                 html.H2("Weather Data"),
                 show_weather_data_table(df),
-            ], style={'padding': '5% 5% 0 0'}),
+            ], style={'padding': '2% 5% 0 0'}),
 
             html.Div([
                 html.H2("Temperature & Humidity Histogram"),
@@ -154,15 +169,18 @@ def create_layout(df):
                     create_slider('hum-input', "Humidity (%):", 20, 90, 50, {i: str(i) for i in range(20, 91, 10)}),
                     create_slider('rain-input', "Rainfall (mm):", 0, 200, 120, {i: str(i) for i in range(0, 201, 20)}),
                     create_slider('wind-input', "Wind Speed (m/s):", 0, 15, 5, {i: str(i) for i in range(0, 17)}),
-                ], style={'paddingRight': '5%'}),
-                create_dropdown('soil-type-input', "Soil Type:",
-                                [{'label': soil, 'value': soil} for soil in config.SOIL_TYPES], 'Sandy'),
-                html.Button('예측하기', id='predict-button', className='button', style={
-                    'background': 'radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(70,252,216,1) 100%)'}),
 
-                html.Div(html.H3(id='prediction-output', className='output', style={'padding-bottom': '5%'}))
+                    create_dropdown('soil-type-input', "Soil Type:",
+                                    [{'label': soil, 'value': soil} for soil in config.SOIL_TYPES], 'Sandy'),
+                    html.Button('예측하기', id='predict-button', className='button', style={
+                        'background': 'radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(70,252,216,1) 100%)'}),
+
+                    html.Div(html.H3(id='prediction-output', className='output', style={'padding-bottom': '5%'}))
+                ], style={'paddingRight': '5%'}),
+
             ], style={'width': '80%', 'margin': '0 auto'}),
 
-        ], style={'backgroundColor': '#f8f9fa', 'paddingTop': '5%'}
-        ),
-    ], style={'marginTop': '50px'})
+        ], style={'backgroundColor': '#f8f9fa', 'paddingTop': '5%'}),
+
+    ])
+    # ], style={'marginTop': '50px'})
