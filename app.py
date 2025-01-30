@@ -6,32 +6,33 @@ from layout import create_layout
 from model import train_model
 
 # server
-server = Flask(__name__)
+app = Flask(__name__)
 
 # create and train model
 df = train_model()
 
 # Dash app
-app = dash.Dash(__name__, server=server, url_base_pathname='/dash/')
-app.title = 'Smart Farm'
-app.layout = create_layout(df)
+dash_app = dash.Dash(__name__, server=app, url_base_pathname='/dash/')
+dash_app.title = 'Smart Farm'
+dash_app.layout = create_layout(df)
 
 
 # route /
-@server.route('/')
+@app.route('/')
 def index():
     content = markdown.markdown(markdown_text)
     return render_template('index.html', content=content)
 
 
 # route /dash
-@server.route('/dash')
+@app.route('/dash')
 def dash():
-    return app.index()
+    return dash_app.index()
 
 
 # run server
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000)
+    # server.run(host='0.0.0.0', port=5000)
     # server.run(debug=True)
 
