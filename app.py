@@ -32,7 +32,5 @@ def dash():
 
 # run server
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-    # server.run(host='0.0.0.0', port=5000)
-    # server.run(debug=True)
+    app.run(debug=True)  # dev
 

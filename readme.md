@@ -2,4 +2,4 @@
 ![home](home.pdf)
 
 # /dash
-![dash](dash.pdf)
+[dash](dash.pdf)

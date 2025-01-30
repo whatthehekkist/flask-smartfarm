@@ -127,14 +127,14 @@ def show_model_evaluation_and_confusion_matrix(n_clicks):  # def update_model_ev
     accuracy = accuracy_score(y_test, y_pred)
     conf_matrix = confusion_matrix(y_test, y_pred)
 
-    print("model: ", model)
-    print("accuracy: ", accuracy)
-    print("conf_matrix: ", conf_matrix)
+    # print("model: ", model)
+    # print("accuracy: ", accuracy)
+    # print("conf_matrix: ", conf_matrix)
 
     # classification_report 출력
     report = classification_report(y_test, y_pred, output_dict=True)
-    print("Classification Report:")
-    print(report)
+    # print("Classification Report:")
+    # print(report)
 
     # classification_report 포맷팅 함수 호출
     report_data = format_classification_report(report)
