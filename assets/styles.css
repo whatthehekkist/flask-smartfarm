@@ -1,3 +1,5 @@
+/* external css for apps (e.g., Dash) in flask server */
+
 .label {
     font-weight: bold;
     margin-top: 10px;
@@ -17,12 +19,12 @@
     font-size: 16px;
     border: none;
     padding: 10px;
-    border-radius: 4px; /* 모서리 둥글게 */
+    border-radius: 4px;
     cursor: pointer;
 }
 
 .button:hover {
-    background-color: #45a049; /* 호버 시 색상 변경 */
+    background-color: #45a049;
 }
 
 .output {
@@ -32,34 +34,34 @@
 
 .fixed-sidebar {
     position: fixed;
-    right: 20px; /* 오른쪽 여백 */
-    bottom: 20px; /* 아래쪽 여백 */
-    background-color: rgba(255, 255, 255, 0.8); /* 배경색 */
+    right: 20px;
+    bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
 
 .fixed-sidebar ul {
-    list-style: none; /* 기본 리스트 스타일 제거 */
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
 .fixed-sidebar li {
-    margin: 5px 0; /* 아이템 간격 */
+    margin: 5px 0;
 }
 
 .fixed-sidebar a {
-    text-decoration: none; /* 링크 밑줄 제거 */
-    color: #333; /* 링크 색상 */
-    display: block; /* 블록 요소로 만들어 클릭 영역을 확장 */
-    padding: 10px; /* 패딩 추가 */
-    border-radius: 3px; /* 모서리 둥글게 */
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 3px;
 }
 
 .fixed-sidebar a:hover {
-    background-color: #f0f0f0; /* hover 시 배경색 변화 */
-    color: #007BFF; /* hover 시 링크 색상 변화 */
+    background-color: #f0f0f0;
+    color: #007BFF;
 }

@@ -255,7 +255,7 @@ y_test = None
 - Split the data into a training set (80%) and a test set (20%).
 - Perform data normalization and print the mean and standard deviation.
 
-train_model() in model.py
+`train_model()` in model.py
 <pre>
 def train_model():
     global df, model, X_train, X_test, y_train, y_test
@@ -367,7 +367,7 @@ def train_model():
 - Calculate precision, recall, and F1-score.
 - Create a scatterplot comparing actual and predicted values.
 
-show_model_evaluation_and_confusion_matrix(n_clicks) in model.py
+`show model evaluation and confusion matrix(n_clicks)` in model.py
 <pre>
 @callback(
     Output('model-evaluation', 'children'),

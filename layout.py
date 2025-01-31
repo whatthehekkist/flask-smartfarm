@@ -122,20 +122,19 @@ def create_layout(df):
     # 레이아웃 정의
     return html.Div([
 
-        # [side bar test..]
-        # html.Div(className='fixed-sidebar', children=[
-        #     html.Ul([
-        #         html.Li(html.A(html.I(className='fas fa-home'), href='/')),
-        #         html.Li(html.A(html.I(className='fas fa-tachometer-alt'), href='/dash/')),
-        #         html.Li(html.A(html.I(className='fas fa-arrow-up'), href='#', className='scroll-link')),
-        #         html.Li(html.A(html.I(className='fas fa-arrow-down'), href='#', className='scroll-link')),
-        #
-        #         html.Li(html.A("HOME", href="/")),
-        #         html.Li(html.A("DASHBOARD", href="/dash")),  # url_for 대신 직접 경로를 사용
-        #         html.Li(html.A("↑", href="#top", className='scroll-link')),
-        #         html.Li(html.A("↓", href="#bottom", className='scroll-link')),
-        #     ])
-        # ]),
+        # side sticky bar (/assets/icons/... 경로는 404 발생하여, static 경로로 변경)
+        html.Div(className='fixed-sidebar', children=[
+            html.Ul([
+                html.Li(html.A(html.Img(src='/static/icons/home.svg', style={'width': '20px', 'height': '20px'}), href="/")),
+                html.Li(html.A(html.Img(src='/static/icons/gauge-high.svg', style={'width': '20px', 'height': '20px'}),
+                               href="/dash")),
+                html.Li(
+                    html.A(html.Img(src='/static/icons/arrow-up.svg', style={'width': '20px', 'height': '20px'}), href="#top",
+                           className='dash-scroll-link')),
+                html.Li(html.A(html.Img(src='/static/icons/arrow-down.svg', style={'width': '20px', 'height': '20px'}),
+                               href="#bottom", className='dash-scroll-link')),
+            ]),
+        ]),
 
         html.Div([
             # html.H1("스마트 농업 토양 습도 예측 대시보드"),

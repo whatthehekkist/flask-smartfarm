@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> --> <!-- Font Awesome -->
+    <!-- <script src="{{ url_for('static', filename='scroll.js') }}" defer></script> -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>Smart Farm | home</title>
 
@@ -17,14 +18,21 @@
     </div>
     <div class="fixed-sidebar">
         <ul>
+            <!--
             <li><a href="/"><i class="fas fa-home"></i></a></li>
             <li><a href="{{ url_for('/dash/') }}"><i class="fas fa-tachometer-alt"></i></a></li>
             <li><a href="#top" class="scroll-link"><i class="fas fa-arrow-up"></i></a></li>
             <li><a href="#bottom" class="scroll-link"><i class="fas fa-arrow-down"></i></a></li>
+            -->
+            <li><a href="/"><img src="static/icons/home.svg" style="width: 20px; height: 20px;"></a></li>
+            <li><a href="/dash"><img src="static/icons/gauge-high.svg" style="width: 20px; height: 20px;"></a></li>
+            <li><a href="#top" class="scroll-link"><img src="static/icons/arrow-up.svg" style="width: 20px; height: 20px;"></a></li>
+            <li><a href="#bottom" class="scroll-link"><img src="static/icons/arrow-down.svg" style="width: 20px; height: 20px;"></a></li>
         </ul>
     </div>
 
     <script>
+        // templates/index.html에서 고정사이드바 메뉴 ↑↓ 스크롤 이벤트 핸들링
         document.querySelectorAll('.scroll-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
