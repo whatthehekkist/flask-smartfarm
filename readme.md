@@ -12,6 +12,8 @@ Visualize it as a dashboard.
 - editor: Pycharm community
 - git: <a href="https://github.com/whatthehekkist/flask-smartfarm" target="_blank">github.com/whatthehekkist/flask-smartfarm</a>
 - deploy: Render
+  - Build Command: `pip install -r requirements.txt`
+  - Start Command: `gunicorn app:app --bind 0.0.0.0:10000`
   - <a href="https://flask-smartfarm.onrender.com/" target="_blank">flask-smartfarm.onrender.com/</a>: home
   - <a href="https://flask-smartfarm.onrender.com/dash" target="_blank">flask-smartfarm.onrender.com/dash</a>: dashboard
 - libraries
