@@ -70,7 +70,9 @@ Smart farm can utilize environmental data to monitor and predict soil moisture.
 Implement a logistic regression model to predict whether soil moisture levels are high or low based on data you will create,
 Visualize it as a dashboard.
 
-### 1: Creating and Exploring Datasets
+<br>
+
+### 1: Creating and Exploring Datasets (collab)
 Create a data frame using pandas and numpy using the data given below.<br>
 (The number of data is 1000 each.)
 
@@ -158,11 +160,12 @@ dtype: int64
 
 <img src="https://github.com/user-attachments/assets/38c158a6-953f-4b9d-a8c2-c062fb823ae2" alt="histogram1" class="responsive-img">
 
-### 2: Preprocessing Datasets
-dev env
+<br>
 
-- Flask
-- Pycharm community
+### 2: Preprocessing Datasets
+- <a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/config.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>config.py</b></a>
+- <a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/app.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>app.py</b></a>
+- <a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/model.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>model.py</b></a>
 
 app.py
 <pre>
@@ -315,7 +318,10 @@ def train_model():
 원-핫 인코딩된 클래스: [array(['Clay', 'Loamy', 'Sandy'], dtype=object)]
 </pre>
 
+<br>
+
 ### 3. Implement Logistic Regression Model
+<a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/model.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>model.py</b></a>
 
 **requirements**
 
@@ -360,7 +366,11 @@ def train_model():
 모델 정확도: 0.485  # avg 0.45 to 0.55
 </pre>
 
+<br>
+
 ### 4.Model evaluation and performance analysis
+<a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/model.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>model.py</b></a>
+
 **requirements**
 
 - Create and visualize a confusion matrix.
@@ -436,9 +446,19 @@ def show_model_evaluation_and_confusion_matrix(n_clicks):
     return f"Accuracy: {accuracy:.2f}", fig, report_data, fig_scatter
 </pre>
 
+<br>
 
 ### 5: Implementing a Dashboard
-Build a dashboard with the following features using Dash:
+- <a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/config.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>config.py</b></a>
+- <a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/app.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>app.py</b></a>
+- <a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/model.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>model.py</b></a>
+- <a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/layout.py" target="_blank" style="color: #ff7bff; text-decoration: none;"><b><u>layout.py</u></b></a> at `/dash`
+- templates
+    - <a href="https://github.com/whatthehekkist/flask-smartfarm/blob/main/templates/index.html" target="_blank" style="color: #ff7bff; text-decoration: none;"><b>index.html</b></a> at `/`
+
+<b>requirements</b>: build a dashboard with the following features using Dash
+
+<br>
 
 a. Data Section
 
@@ -454,6 +474,8 @@ a. Data Section
     </div>
 </a>
 
+<br>
+
 b. Model Evaluation Section
 
 - accuracy and confusion matrix.
@@ -467,6 +489,8 @@ b. Model Evaluation Section
         <div class="img-overlay">go to dashboard</div>
     </div>
 </a>
+
+<br>
 
 c. Prediction Section based on User Input
     
@@ -482,6 +506,8 @@ c. Prediction Section based on User Input
         <div class="img-overlay">go to dashboard</div>
     </div>
 </a>
+
+<br>
 
 layout.py
 <pre>
