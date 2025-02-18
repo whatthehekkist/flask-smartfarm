@@ -1,5 +1,4 @@
 # https://flask-smartfarm.onrender.com
-
 ML tutorial that monitors and predicts soil moisture using some random data.
 Implemented a logistic regression model to predict whether soil moisture levels are high or low based on data you will create,
 Visualize it as a dashboard.
@@ -16,6 +15,8 @@ Visualize it as a dashboard.
   - Start Command: `gunicorn app:app --bind 0.0.0.0:10000`
   - <a href="https://flask-smartfarm.onrender.com/" target="_blank">flask-smartfarm.onrender.com/</a>: home
   - <a href="https://flask-smartfarm.onrender.com/dash" target="_blank">flask-smartfarm.onrender.com/dash</a>: dashboard
+  - note: the deployed app does a cold start so it can take more than 30 sec to get server response
+    - <a href="https://render.com/docs/free?_gl=1*s3hlkt*_gcl_au*MjAyMDI2NzYxNy4xNzM5ODM4Mjk3*_ga*MTA2NzE0MDM0OC4xNzM5ODM4Mjk4*_ga_QK9L9QJC5N*MTczOTgzODI5Ny4xLjEuMTczOTgzODM0My4xNC4wLjA.#spinning-down-on-idle" target="_blank">Spinning down on idle</a>
 - libraries
   ```python
   pandas~=2.2.3
@@ -29,7 +30,7 @@ Visualize it as a dashboard.
   Markdown~=3.7
   Gunicorn==20.1.0 # for Render deploy
   ```
-- blog post: <a href="https://dev-whatthehekkist.netlify.app/python/smartfarm/" target="_blank">Flask &#124; Smart Farm Soil Moisture Predictor</a>
+- blog post: <a href="https://dev-whatthehekkist.netlify.app/project/python/smartfarm/" target="_blank">Flask &#124; Smart Farm Soil Moisture Predictor</a>
  
 
 [//]: # (# resources)
